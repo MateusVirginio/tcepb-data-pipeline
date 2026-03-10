@@ -1,0 +1,26 @@
+services:
+  dw_postgres:
+    image: postgres:15
+    container_name: dw_tcepb
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: tcepb_dw
+    ports:
+      - "5433:5432"
+    volumes:
+      - dw_data:/var/lib/postgresql/data:z
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin_dw
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - dw_postgres
+
+volumes:
+  dw_data:
